@@ -1,0 +1,4 @@
+const arrived=new Set();const seats={BALCONY:[],FLOOR:[]};HSC_DEMO.ticketNumbers.forEach((n,i)=>seats[i%2===0?'BALCONY':'FLOOR'].push(n));
+function renderCheckin(){['BALCONY','FLOOR'].forEach(seat=>{const el=document.getElementById(seat.toLowerCase()+'Grid');el.innerHTML='';seats[seat].forEach(n=>{const b=document.createElement('button');b.className='check-ticket'+(arrived.has(n)?' arrived':'');b.textContent=n;b.dataset.ticket=n;b.onclick=()=>{arrived.has(n)?arrived.delete(n):arrived.add(n);renderCheckin()};el.appendChild(b)})});document.getElementById('arrivalCount').textContent=`${arrived.size} arrived`}
+document.getElementById('searchTicket').addEventListener('input',e=>{const q=e.target.value.trim();document.querySelectorAll('.check-ticket').forEach(b=>b.classList.toggle('hidden',q!==''&&!b.dataset.ticket.includes(q)))});
+renderCheckin();
